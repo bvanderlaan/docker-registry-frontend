@@ -1,55 +1,46 @@
+/* @ngInject */
+export default class DeleteRepositoryController {
+  constructor($route, $modalInstance, $window, Repository, items, information, toastr) {
+    this.items = items;
+    this.information = information;
+    this.$route = $route;
+    this.$modalInstance = $modalInstance;
+    this.$window = $window;
+    this.Repository = Repository;
+    this.toastr = toastr;
+  }
 
+  // Callback that triggers deletion of tags and reloading of page
+  ok() {
+    angular.forEach(this.items, (value) => {
+      const repoStr = value;
+      const repoUser = value.split('/')[0];
+      const repoName = value.split('/')[1];
 
-/**
- * @ngdoc function
- * @name docker-registry-frontend.controller:DeleteRepositoryController
- * @description
- * # DeleteRepositoryController
- * Controller of the docker-registry-frontend
- */
-angular.module('delete-repository-controller', ['registry-services'])
-  .controller('DeleteRepositoryController', ['$route', '$modalInstance', '$window', 'Repository', 'items', 'information',
-    class DeleteRepositoryController {
-      constructor($route, $modalInstance, $window, Repository, items, information) {
-        this.items = items;
-        this.information = information;
-        this.$route = $route;
-        this.$modalInstance = $modalInstance;
-        this.$window = $window;
-        this.Repository = Repository;
-      }
+      const repo = {
+        repoUser,
+        repoName,
+      };
 
-      // Callback that triggers deletion of tags and reloading of page
-      ok() {
-        angular.forEach(this.items, (value) => {
-          const repoStr = value;
-          const repoUser = value.split('/')[0];
-          const repoName = value.split('/')[1];
+      this.Repository.delete(
+        repo,
+        // success
+        () => this.toastr.success(`Deleted repository: ${repoStr}`),
+        // error
+        (httpResponse) => {
+          this.toastr.error(`Failed to delete repository: ${repoStr} Response: ${httpResponse.statusText}`);
+        },
+      );
+    });
 
-          const repo = {
-            repoUser,
-            repoName,
-          };
+    this.$modalInstance.close();
 
-          this.Repository.delete(
-            repo,
-            // success
-            () => toastr.success(`Deleted repository: ${repoStr}`),
-            // error
-            (httpResponse) => {
-              toastr.error(`Failed to delete repository: ${repoStr} Response: ${httpResponse.statusText}`);
-            },
-          );
-        });
+    // Go to the repositories page
+    this.$window.location.href = 'repositories';
+    this.$route.reload();
+  }
 
-        this.$modalInstance.close();
-
-        // Go to the repositories page
-        this.$window.location.href = 'repositories';
-        this.$route.reload();
-      }
-
-      cancel() {
-        this.$modalInstance.dismiss('cancel');
-      }
-    }]);
+  cancel() {
+    this.$modalInstance.dismiss('cancel');
+  }
+}

@@ -1,9 +1,9 @@
-
+import services from '../services';
 
 describe('registry-service', () => {
   let mockRepository;
   let $httpBackend;
-  beforeEach(angular.mock.module('registry-services'));
+  beforeEach(angular.mock.module(services));
 
   describe('GET catalog', () => {
     beforeEach(() => {

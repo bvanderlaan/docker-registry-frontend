@@ -1,3 +1,5 @@
+import tags from '../tag';
+
 function buildRoute() {
   return {
     current: {
@@ -34,19 +36,44 @@ function mockRegistryHost($httpBackend) {
 
 describe('TagController', () => {
   // load the controller's module
-  beforeEach(module('tag-controller'));
+  beforeEach(angular.mock.module(tags));
 
   let $controller;
   let $httpBackend;
   let $q;
   let $rootScope;
+  let $location;
+  let $route;
 
-  beforeEach(inject((_$controller_, _$httpBackend_, _$q_, _$rootScope_) => {
+  beforeEach(inject((_$controller_, _$httpBackend_, _$q_, _$rootScope_, _$location_, _$route_) => {
     $controller = _$controller_;
     $httpBackend = _$httpBackend_;
     $q = _$q_;
     $rootScope = _$rootScope_;
+    $location = _$location_;
+    $route = _$route_;
   }));
+
+  it('/tag/repositoryName/latest should display tag detail page', () => {
+    $location.path('/tag/repositoryName/latest');
+    $rootScope.$digest();
+
+    expect($route.current.controller).toBe('TagController as tag');
+  });
+
+  it('/tag/repositoryUser/repositoryName/latest should display tag detail page', () => {
+    $location.path('/tag/repositoryUser/repositoryName/latest');
+    $rootScope.$digest();
+
+    expect($route.current.controller).toBe('TagController as tag');
+
+    const $scope = {};
+    const controller = $controller('TagController', { $scope });
+    expect(controller.repositoryUser).toBe('repositoryUser');
+    expect(controller.repositoryName).toBe('repositoryName');
+    expect(controller.repository).toBe('repositoryUser/repositoryName');
+    expect(controller.tagName).toBe('latest');
+  });
 
   describe('Sorting', () => {
     it('should sort tags Ascending', () => {

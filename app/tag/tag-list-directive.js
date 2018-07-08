@@ -1,8 +1,15 @@
+import angular from 'angular';
 
+import template from './tag-list-directive.html';
 
-angular.module('tag-list-directive', [])
-  .directive('tagList', () => ({
+function tagList() {
+  return {
+    template,
     restrict: 'E',
-    templateUrl: 'tag/tag-list-directive.html',
     controller: 'TagController as tag',
-  }));
+  };
+}
+
+export default angular.module('directives.tagList', [])
+  .directive('tagList', tagList)
+  .name;

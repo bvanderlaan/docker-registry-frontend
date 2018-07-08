@@ -1,8 +1,8 @@
-
+import main from '../main';
 
 describe('MainController', () => {
   // load the controller's module
-  beforeEach(module('main-controller'));
+  beforeEach(angular.mock.module(main));
 
   let $httpBackend;
   let controller;
@@ -15,6 +15,7 @@ describe('MainController', () => {
   it('should attach an appVersion and registryHost to the scope', () => {
     const expectedAppVersion = { git: { sha1: 'foo', ref: 'bar' } };
     const expectedRegistryHost = { host: 'path-to-your-registry', port: 80 };
+
     $httpBackend.expectGET('app-version.json').respond(expectedAppVersion);
     $httpBackend.expectGET('registry-host.json').respond(expectedRegistryHost);
     $httpBackend.flush();

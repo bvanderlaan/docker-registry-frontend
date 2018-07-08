@@ -3,10 +3,7 @@ services:
   frontend:
     build: .
     ports:
-        # Serves the page via grunt
       - "9000:9000"
-        # For live reload with grunt
-      - "35729:35729"
     depends_on:
       - registry
     networks:

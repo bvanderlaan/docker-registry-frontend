@@ -34,10 +34,10 @@ ADD .git/refs $WORKDIR/.git/refs
 # Create version file
 RUN export GITREF=$(cat .git/HEAD | cut -d" " -f2) && \
     export GITSHA1=$(cat .git/$GITREF) && \
-    echo "{\"git\": {\"sha1\": \"$GITSHA1\", \"ref\": \"$GITREF\"}}" > app-version.json
+    echo "{\"git\": {\"sha1\": \"$GITSHA1\", \"ref\": \"$GITREF\"}}" > app/app-version.json
 
 ## Build App
-RUN node_modules/grunt-cli/bin/grunt build --allow-root
+RUN npm run build
 
 
 ################################################################################
@@ -73,7 +73,6 @@ RUN echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
 ############################################################
 
 COPY --from=build_app /usr/src/dist/ $WWW_DIR/
-COPY --from=build_app /usr/src/app-version.json $WWW_DIR/app-version.json
 
 ############################################################
 # Install and configure webserver software

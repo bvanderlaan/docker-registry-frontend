@@ -1,11 +1,10 @@
 /* @ngInject */
-export default class AppModeService {
+export default class RegistryHostService {
   constructor($resource) {
-    const service = $resource('app-mode.json', {}, {
+    const service = $resource('registry-host.json', {}, {
       query: {
         method: 'GET',
         isArray: false,
-        cache: false,
       },
     });
     return service;

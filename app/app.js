@@ -1,88 +1,29 @@
+import angular from 'angular';
+import ngRoute from 'angular-route';
+import cfpLoadingBarProvider from 'angular-loading-bar';
+import ngFilter from 'angular-filter';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/main.css';
 
-/**
- * @ngdoc overview
- * @name docker-registry-frontend
- * @description
- * # docker-registry-frontend
- *
- * Main module of the application.
- */
-angular
-  .module('docker-registry-frontend', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
-    'registry-services', // TODO: Maybe the following dependencies are not needed? At least they weren't in the "yo angular" output.
-    'main-controller',
-    'repository-detail-controller',
-    'tag-controller',
-    'repository-list-controller',
-    'tag-list-directive',
-    'image-details-directive',
-    'tag-item-controller',
-    'image-controller',
-    'home-controller',
-    'create-tag-controller',
-    'delete-tags-controller',
-    'delete-repository-controller',
-    'ui.bootstrap',
-    'angular-loading-bar',
-    'angularMoment',
-    'app-version-services',
-    'app-mode-services',
-    'smart-table',
-    'angular.filter',
-    'ui.checkbox',
-  ])
-  .config(['$routeProvider', '$resourceProvider', 'cfpLoadingBarProvider', '$locationProvider',
-    ($routeProvider, $resourceProvider, cfpLoadingBarProvider, $locationProvider) => {
-      $locationProvider.html5Mode(true);
+import routing from './app.config';
+import services from './services';
+import home from './home';
+import image from './image';
+import main from './main';
+import repository from './repository';
+import tag from './tag';
 
-      // Don't show the spinner when making XHR requests.
-      // Also, show the bar only if an XHR request takes longer than 50ms.
-      cfpLoadingBarProvider.includeSpinner = false;
-      cfpLoadingBarProvider.latencyThreshold = 10;
-
-      // Don't strip trailing slashes from calculated URLs
-      $resourceProvider.defaults.stripTrailingSlashes = false;
-
-      $routeProvider
-        .when('/home', {
-          templateUrl: 'home.html',
-          controller: 'HomeController as home',
-        })
-        .when('/repositories/:reposPerPage?/:lastNamespace?/:lastRepository?', {
-          templateUrl: 'repository/repository-list.html',
-          controller: 'RepositoryListController as repositories',
-        })
-        .when('/repository/:repositoryUser/:repositoryName', {
-          templateUrl: 'repository/repository-detail.html',
-          controller: 'RepositoryDetailController as repository',
-        })
-        .when('/repository/:repositoryName', {
-          templateUrl: 'repository/repository-detail.html',
-          controller: 'RepositoryDetailController as repository',
-        })
-        .when('/about', {
-          templateUrl: 'about.html',
-        })
-        .when('/tag/:repositoryUser?/:repositoryName/:tagName/', {
-          templateUrl: 'tag/tag-detail.html',
-          controller: 'TagController as tag',
-        })
-        .when('/image/:imageId', {
-          templateUrl: 'tag/image-detail.html',
-          controller: 'ImageController as image',
-        })
-        .when('/image/:imageId/tag/:repositoryUser?/:repositoryName?', {
-          templateUrl: 'tag/create-tag.html',
-          controller: 'CreateTagController as tag',
-        })
-        .otherwise({
-          redirectTo: '/repositories/20',
-        });
-    }]);
+export default angular.module('docker-registry-frontend', [
+  cfpLoadingBarProvider,
+  ngFilter,
+  ngRoute,
+  services,
+  home,
+  image,
+  main,
+  repository,
+  tag,
+])
+  .config(routing)
+  .name;

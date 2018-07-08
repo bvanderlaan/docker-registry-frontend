@@ -1,8 +1,15 @@
+import angular from 'angular';
 
+import template from './image-details-directive.html';
 
-angular.module('image-details-directive', [])
-  .directive('imageDetails', () => ({
+function imageDetails() {
+  return {
+    template,
     restrict: 'E',
-    templateUrl: 'image/image-details-directive.html',
     controller: 'ImageController as image',
-  }));
+  };
+}
+
+export default angular.module('directives.imageDetails', [])
+  .directive('imageDetails', imageDetails)
+  .name;

@@ -1,33 +1,18 @@
 <!doctype html>
-<html class="no-js" ng-app="docker-registry-frontend" ng-controller="MainController as main">
+<html lang="en" ng-app="docker-registry-frontend" ng-controller="MainController as main">
   <head>
     <base href="/">
     <meta charset="utf-8">
     <title ng-bind-template="Docker registry {{main.$location.path()}}">Docker registry</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- npm:css -->
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="node_modules/toastr/build/toastr.min.css" />
-    <link rel="stylesheet" href="node_modules/angular-loading-bar/build/loading-bar.css" />
-    <!-- endnpm -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
   </head>
   <body>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
-    <!-- Add your site or application content here -->
-
-
     <div class="container">
-
       <div class="masthead">
         <h3 class="text-muted">Docker Registry Frontend</h3>
       </div>
@@ -39,63 +24,9 @@
           <a href="https://github.com/kwk/docker-registry-frontend/issues/new"><span class="glyphicon glyphicon-fire"></span> <small>Report a bug</small></a>
           <a href="https://github.com/kwk/docker-registry-frontend/fork"><span class="glyphicon glyphicon-random"></span> <small> Fork me on GitHub</small></a>
           <a href="about"><span class="glyphicon glyphicon-question-sign"></span> <small>About</small></a>
-          <a href="https://github.com/kwk/docker-registry-frontend/commit/{{appVersion.git.sha1}}"><span class="glyphicon glyphicon-barcode"></span> <small>This is git revision: <span ng-bind-template="{{appVersion.git.sha1 | limitTo: 7}}">-</span></small></a>
+          <a href="https://github.com/kwk/docker-registry-frontend/commit/{{main.appVersion.git.sha1}}"><span class="glyphicon glyphicon-barcode"></span> <small>This is git revision: <span ng-bind-template="{{main.appVersion.git.sha1 | limitTo: 7}}">-</span></small></a>
         </p>
       </footer>
-
     </div>
-
-    <!-- build:js(.) scripts/oldieshim.js -->
-    <!--[if lt IE 9]>
-    <script src="node_modules/es5-shim/es5-shim.js"></script>
-    <script src="node_modules/json3/lib/json3.js"></script>
-    <![endif]-->
-    <!-- endbuild -->
-
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- npm:js -->
-    <script src="node_modules/jquery/dist/jquery.js"></script>
-    <script src="node_modules/angular/angular.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="node_modules/angular-resource/angular-resource.js"></script>
-    <script src="node_modules/angular-cookies/angular-cookies.js"></script>
-    <script src="node_modules/angular-sanitize/angular-sanitize.js"></script>
-    <script src="node_modules/angular-animate/angular-animate.js"></script>
-    <script src="node_modules/angular-touch/angular-touch.js"></script>
-    <script src="node_modules/angular-route/angular-route.js"></script>
-    <script src="node_modules/toastr/build/toastr.min.js"></script>
-    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
-    <script src="node_modules/angular-loading-bar/build/loading-bar.js"></script>
-    <script src="node_modules/moment/moment.js"></script>
-    <script src="node_modules/angular-moment/angular-moment.js"></script>
-    <script src="node_modules/angular-smart-table/dist/smart-table.min.js"></script>
-    <script src="node_modules/angular-filter/dist/angular-filter.js"></script>
-    <script src="node_modules/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js"></script>
-    <!-- endnpm -->
-    <!-- endbuild -->
-
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="app.js"></script>
-    <script src="main-controller.js"></script>
-
-    <script src="home/home-controller.js"></script>
-
-    <script src="repository/repository-detail-controller.js"></script>
-    <script src="repository/delete-repository-controller.js"></script>
-    <script src="repository/repository-list-controller.js"></script>
-
-    <script src="tag/tag-controller.js"></script>
-    <script src="tag/tag-item-controller.js"></script>
-    <script src="tag/create-tag-controller.js"></script>
-    <script src="tag/delete-tags-controller.js"></script>
-    <script src="tag/tag-list-directive.js"></script>
-
-    <script src="image/image-controller.js"></script>
-    <script src="image/image-details-directive.js"></script>
-
-    <script src="services/registry-services.js"></script>
-    <script src="services/app-version-services.js"></script>
-    <script src="services/app-mode-services.js"></script>
-    <!-- endbuild -->
 </body>
 </html>

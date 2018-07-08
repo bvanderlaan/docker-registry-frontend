@@ -1,7 +1,4 @@
-// Karma configuration
-// http://karma-runner.github.io/0.12/config/configuration-file.html
-// Generated on 2014-09-12 using
-// generator-karma 0.8.3
+const webpackConfig = require('../webpack.config.js');
 
 module.exports = (config) => {
   config.set({
@@ -15,34 +12,17 @@ module.exports = (config) => {
     frameworks: ['jasmine'],
 
     reporters: ['junit', 'spec'],
-
-    // list of files / patterns to load in the browser
-    files: [
-      'node_modules/angular/angular.js',
-      'node_modules/angular-animate/angular-animate.js',
-      'node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js',
-      'node_modules/angular-bootstrap-checkbox/angular-bootstrap-checkbox.js',
-      'node_modules/angular-cookies/angular-cookies.js',
-      'node_modules/angular-filter/dist/angular-filter.js',
-      'node_modules/angular-loading-bar/src/loading-bar.js',
-      'node_modules/angular-mocks/angular-mocks.js',
-      'node_modules/moment/moment.js',
-      'node_modules/angular-moment/angular-moment.js',
-      'node_modules/angular-resource/angular-resource.js',
-      'node_modules/angular-route/angular-route.js',
-      'node_modules/angular-sanitize/angular-sanitize.js',
-      'test/init-smart-table.js',
-      'node_modules/angular-smart-table/src/smart-table.module.js',
-      'node_modules/angular-touch/angular-touch.js',
-      'app/**/*.js',
-      'test/spec/**/*.js',
-    ],
-
-    // list of files / patterns to exclude
-    exclude: [],
-
-    // web server port
     port: 8080,
+
+    // Continuous Integration mode
+    // if true, it capture browsers, run tests and exit
+    singleRun: false,
+
+    colors: true,
+
+    // level of logging
+    // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
+    logLevel: config.LOG_INFO,
 
     // Start these browsers, currently available:
     // - Chrome
@@ -56,32 +36,18 @@ module.exports = (config) => {
       'PhantomJS',
     ],
 
-    // Which plugins to enable
-    // plugins: [
-    //   'karma-phantomjs-launcher',
-    //   'karma-jasmine'
-    // ],
+    // list of files / patterns to load in the browser
+    files: [
+      'test/test.entrypoint.js',
+    ],
 
-    // Continuous Integration mode
-    // if true, it capture browsers, run tests and exit
-    singleRun: false,
+    // list of files / patterns to exclude
+    exclude: [],
 
-    colors: true,
-
-    // level of logging
-    // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_INFO,
-
-    // Uncomment the following lines if you are using grunt's server to run the tests
-    // proxies: {
-    //   '/': 'http://localhost:9000/'
-    // },
-    // URL root prevent conflicts with the site root
-    // urlRoot: '_karma_'
     preprocessors: {
-      'app/**/*.js': ['babel'],
-      'test/spec/**/*.js': ['babel'],
+      'test/test.entrypoint.js': ['webpack', 'sourcemap'],
     },
+
     babelPreprocessor: {
       options: {
         presets: ['env'],
@@ -93,6 +59,17 @@ module.exports = (config) => {
       sourceFileName(file) {
         return file.originalPath;
       },
+    },
+
+    webpack: {
+      devtool: 'inline-source-map',
+      mode: 'development',
+      module: webpackConfig.module,
+      plugins: webpackConfig.plugins,
+    },
+
+    webpackMiddleware: {
+      noInfo: true,
     },
   });
 };
