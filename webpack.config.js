@@ -74,7 +74,7 @@ module.exports = {
         headers: {
           'x-custom-added-header': 'custom-value',
         },
-        target: `http://${process.env.DOCKER_REGISTRY_HOST}:${process.env.DOCKER_REGISTRY_PORT}`,
+        target: `http://${process.env.DOCKER_REGISTRY_HOST || 'localhost'}:${process.env.DOCKER_REGISTRY_PORT || 5000}`,
       },
     },
   },
