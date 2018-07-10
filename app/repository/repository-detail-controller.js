@@ -21,6 +21,7 @@ export default class RepositoryDetailController {
     this.appMode = AppMode.query();
     this.maxTagsPage = undefined;
     this.selectedRepositories = [];
+    this.tagsCurrentPage = 0;
   }
 
   // Method used to disable next & previous links
