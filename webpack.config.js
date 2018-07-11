@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const extractSass = new MiniCssExtractPlugin({
-  filename: 'bundle.[hash].css',
+  filename: '[name].[hash].css',
   disable: process.env.NODE_ENV === 'development',
 });
 
@@ -26,6 +26,11 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '',
     filename: '[name].[hash].js',
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   module: {
     rules: [{
