@@ -1,11 +1,11 @@
 const path = require('path');
 
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const extractSass = new MiniCssExtractPlugin({
-  filename: 'bundle.css',
+  filename: 'bundle.[hash].css',
   disable: process.env.NODE_ENV === 'development',
 });
 
@@ -19,11 +19,13 @@ const indexHTML = new HtmlWebpackPlugin({
 
 module.exports = {
   devtool: 'source-map',
-  entry: { app: './app/app.js' },
+  entry: {
+    bundle: './app/app.js',
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '',
-    filename: 'bundle.js',
+    filename: '[name].[hash].js',
   },
   module: {
     rules: [{
